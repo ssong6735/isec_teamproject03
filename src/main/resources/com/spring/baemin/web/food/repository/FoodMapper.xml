@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace에는 사용할 인터페이스 풀 경로(패키지명 포함 인터페이스)를 적는다 -->
+<mapper namespace="com.spring.baemin.web.food.repository.FoodMapper">
+
+    <!-- SELECT 문 처리를 위한 자바 필드와 테이블 컬럼명 매핑 -->
+    <!-- resultMap: 자바의 이름규칙과 SQL 의 이름규칙이 다를때 매핑 처리 -->
+    <!-- id 속성에는 이 맵의 이름을 만들어주고 type 속성에는 해당 클래스 전체 경로 -->
+    <resultMap id="boardMap" type="com.spring.baemin.web.food.domain.Restaurant">
+        <!--  property속성에는 자바핑드명, column은 테이블 컬럼명    -->
+        <result property="restaurantNum" column="res_num" />
+        <result property="restaurantName" column="res_name" />
+        <result property="number" column="tel_number" />
+    </resultMap>
+
+    <!-- 음식점 전체 조회 -->
+    <!-- 1. 페이징 없는 버전
+    <select id="findAll" resultMap="boardMap">
+        SELECT * FROM rmboard ORDER BY res_num
+    </select>
+    -->
+    <!-- 2. 페이징 쿼리 적용 -->
+    <select id="findAll" resultMap="boardMap">
+        <![CDATA[
+        SELECT
+        res_num, res_name, tel_number, menus, category
+        FROM (SELECT /*+INDEX_DESC(rmboard pk_rmboard)*/
+        rownum rn, res_num, res_name, tel_number, menus, category
+        FROM rmboard
+        WHERE rownum <= #{page} * #{amount})
+        WHERE rn > (#{page} - 1) * #{amount}
+        ]]>
+    </select>
+
+    <!-- 음식점 추가 기능 -->
+    <insert id="create">
+        INSERT INTO rmboard
+        (res_num, res_name, tel_number, menus, category)
+        VALUES
+        (seq_rmboard.nextval, #{restaurantName}, #{number}, #{menus}, #{category})
+    </insert>
+
+    <!-- 음식점 상세보기 기능 -->
+    <select id="more" resultMap="boardMap">
+        SELECT * FROM rmboard
+        WHERE res_num = #{restaurantNum}
+    </select>
+
+    <!-- 음식점 메뉴 정보 수정 -->
+    <update id="rewrite">
+        UPDATE rmboard
+        SET res_name = #{restaurantName},
+        tel_number = #{number},
+        menus = #{menus},
+        category = #{category}
+        WHERE res_num = #{restaurantNum}
+    </update>
+
+    <!-- 음식점 삭제 -->
+    <delete id="remove">
+        DELETE FROM rmboard
+        WHERE res_num = #{restaurantNum}
+    </delete>
+
+    <!-- 총 게시물 수 조회 -->
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*)
+        FROM rmboard
+    </select>
+
+</mapper>
