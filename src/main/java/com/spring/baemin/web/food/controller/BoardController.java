@@ -10,10 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,7 +40,7 @@ public class BoardController {
     public String list(Criteria criteria, Model model) {
         model.addAttribute("list", boardService.findAll(criteria));
         // 페이지 정보를 만들어서 jsp 에게 보내기
-        model.addAttribute("pageMaker", new PageMaker(criteria, boardService.getTotal()));
+        model.addAttribute("pageMaker", new PageMaker(criteria, boardService.getTotal(criteria)));
         return "/board/list";
     }
 
@@ -56,7 +53,6 @@ public class BoardController {
     //매점 등록 처리 요청
     @PostMapping("/write")
     public String write(Restaurant restaurant) {
-//        log.info("restaurant: " + restaurant);
         try {
             boardService.create(restaurant);
         } catch (Exception e) {
@@ -67,7 +63,8 @@ public class BoardController {
 
     //매점 정보 상세보기 요청
     @GetMapping("/content")
-    public String content(int restaurantNum, Model model) {
+    public String content(int restaurantNum,
+                          @ModelAttribute("cri") Criteria criteria, Model model) {
         Restaurant content = boardService.more(restaurantNum);
         model.addAttribute("restaurant", content);
         return "/board/content";

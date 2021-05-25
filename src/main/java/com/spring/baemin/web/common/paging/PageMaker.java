@@ -2,6 +2,8 @@ package com.spring.baemin.web.common.paging;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Getter @ToString
 public class PageMaker {
@@ -45,6 +47,27 @@ public class PageMaker {
 
         // 다음 버튼 활성화 여부
         this.next = this.endPage < realEnd;
+    }
+
+    //요청 파라미터를 쉽게 만들어주는 메서드
+    public String makeParam(int page) {
+        UriComponents build = UriComponentsBuilder.newInstance()
+                .queryParam("page", page)
+                .queryParam("amount", criteria.getAmount())
+                .queryParam("type", criteria.getType())
+                .queryParam("keyword", criteria.getKeyword())
+                .build();
+        return build.toString();
+    }
+
+    public String makeParam(int page, int amount) {
+        UriComponents build = UriComponentsBuilder.newInstance()
+                .queryParam("page", page)
+                .queryParam("amount", amount)
+                .queryParam("type", criteria.getType())
+                .queryParam("keyword", criteria.getKeyword())
+                .build();
+        return build.toString();
     }
 
 }

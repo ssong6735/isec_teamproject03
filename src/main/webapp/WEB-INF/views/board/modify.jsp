@@ -67,13 +67,17 @@
                                                         <select class="select-box" name="category">
                                                             <option value="">--카테고리 선택--</option>
                                                             <option value="KOREAN_FOOD"
-                                                                ${restaurant.category=='KOREAN_FOOD' ? 'selected' : '' }>한식</option>
+                                                                ${restaurant.category=='KOREAN_FOOD' ? 'selected' : ''
+                                                                }>한식</option>
                                                             <option value="CHINA_FOOD"
-                                                                ${restaurant.category=='CHINA_FOOD' ? 'selected' : '' }>중식</option>
+                                                                ${restaurant.category=='CHINA_FOOD' ? 'selected' : '' }>
+                                                                중식</option>
                                                             <option value="ITALY_FOOD"
-                                                                ${restaurant.category=='ITALY_FOOD' ? 'selected' : '' }>이태리식</option>
+                                                                ${restaurant.category=='ITALY_FOOD' ? 'selected' : '' }>
+                                                                이태리식</option>
                                                             <option value="JAPAN_FOOD"
-                                                                ${restaurant.category=='JAPAN_FOOD' ? 'selected' : '' }>일식</option>
+                                                                ${restaurant.category=='JAPAN_FOOD' ? 'selected' : '' }>
+                                                                일식</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -91,7 +95,7 @@
 
                                         <div class="list-btn">
                                             <button type="submit" class="btn btn-basic">완료</button>
-                                            <a class="btn btn-basic" href="/board/list">취소</a>
+                                            <a class="btn btn-basic" href="#" onClick="history.back();">취소</a>
                                         </div>
                                     </form>
                                 </div>
@@ -124,7 +128,8 @@
         integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
     <!-- custom js -->
     <script>
-
+        // url 감추기
+        // history.replaceState({}, null, location.pathname);
     </script>
 
 </body>

@@ -1,14 +1,18 @@
 package com.spring.baemin.web.common.paging;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Getter
+@Getter @Setter
 @ToString
 public class Criteria {
 
     private int page; //페이지 넘버
     private int amount; //한 페이지당 게시물 수
+
+    private String type; // 검색조건
+    private String keyword; // 검색어
 
     public Criteria() {
         this(1, 10);

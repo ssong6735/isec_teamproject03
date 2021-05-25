@@ -1,5 +1,6 @@
 package com.spring.baemin.web.food.repository;
 
+import com.spring.baemin.web.common.paging.Criteria;
 import com.spring.baemin.web.food.domain.FoodCategory;
 import com.spring.baemin.web.food.domain.Restaurant;
 import org.junit.jupiter.api.DisplayName;
@@ -81,5 +82,32 @@ class FoodMapperTest {
 
             mapper.create(restaurant);
         }
+    }
+
+    @Test
+    @DisplayName("페이지 정보에 따른 게시물을 조회해야 한다.")
+    void pagingTest1() {
+        System.out.println("====================================================================");
+        Criteria criteria = new Criteria(1, 10);
+        for (Restaurant restaurant : mapper.findAll(criteria)) {
+            System.out.println(restaurant);
+        }
+        System.out.println("====================================================================");
+    }
+
+    @Test
+    @DisplayName("제목으로 검색된 게시물 리스트를 반환해야 한다.")
+    void searchByTitleTest() {
+        Criteria criteria = new Criteria();
+        criteria.setPage(1);
+        criteria.setAmount(10);
+        criteria.setKeyword("20");
+        criteria.setType("resName");
+
+        System.out.println("==============================================================");
+        for (Restaurant restaurant : mapper.getSearchFindAll(criteria)) {
+            System.out.println(restaurant);
+        }
+        System.out.println("==============================================================");
     }
 }

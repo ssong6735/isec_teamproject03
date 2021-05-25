@@ -46,7 +46,7 @@
             <section id="content">
                 <div class="content-wrap">
                     <section id="sub-page" class="main-container">
-                        <div class="container clearfix">                            
+                        <div class="container clearfix">
 
                             <div class="row">
                                 <div class="col-lg-12 table-box">
@@ -83,7 +83,7 @@
 
                                         <div class="list-btn">
                                             <button type="submit" class="btn btn-basic">등록</button>
-                                            <a class="btn btn-basic" href="/board/list">취소</a>
+                                            <a class="btn btn-basic" href="#" onClick="history.back();">취소</a>
                                         </div>
                                     </form>
                                 </div>
@@ -116,7 +116,8 @@
         integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
     <!-- custom js -->
     <script>
-
+        // url 감추기
+        // history.replaceState({}, null, location.pathname);
     </script>
 
 </body>

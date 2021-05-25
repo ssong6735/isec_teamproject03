@@ -35,6 +35,40 @@
         ]]>
     </select>
 
+    <!-- 3. 검색 쿼리 + 페이징 쿼리 적용 -->
+    <select id="getSearchFindAll" resultMap="boardMap">
+        <![CDATA[
+        SELECT
+            res_num, res_name, tel_number, menus, category
+        FROM
+            (SELECT /*+INDEX_DESC(rmboard pk_rmboard)*/
+            rownum rn, res_num, res_name, tel_number, menus, category
+        FROM rmboard
+        WHERE
+        ]]>
+        <!-- 동적 SQL: 태그로 부분적으로 사용 -->
+        <if test="type == 'resNum'">
+            res_num LIKE '%' || #{keyword} || '%' AND
+        </if>
+        <if test="type == 'resName'">
+            res_name LIKE '%' || #{keyword} || '%' AND
+        </if>
+        <if test="type == 'number'">
+            tel_number LIKE '%' || #{keyword} || '%' AND
+        </if>
+        <if test="type == 'menus'">
+            menus LIKE '%' || #{keyword} || '%' AND
+        </if>
+        <if test="type == 'category'">
+            category LIKE '%' || #{keyword} || '%' AND
+        </if>
+
+        <![CDATA[
+            rownum <= #{page} * #{amount})
+        WHERE rn > (#{page} - 1) * #{amount}
+        ]]>
+    </select>
+
     <!-- 음식점 추가 기능 -->
     <insert id="create">
         INSERT INTO rmboard
@@ -69,6 +103,21 @@
     <select id="getTotalCount" resultType="int">
         SELECT COUNT(*)
         FROM rmboard
+        <if test="type == 'resNum'">
+            WHERE res_num LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="type == 'resName'">
+            WHERE res_name LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="type == 'number'">
+            WHERE tel_number LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="type == 'menus'">
+            WHERE menus LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="type == 'category'">
+            WHERE category LIKE '%' || #{keyword} || '%'
+        </if>
     </select>
 
 </mapper>

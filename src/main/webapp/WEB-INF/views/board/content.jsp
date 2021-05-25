@@ -46,7 +46,7 @@
             <section id="content">
                 <div class="content-wrap">
                     <section id="sub-page" class="main-container">
-                        <div class="container clearfix">                            
+                        <div class="container clearfix">
 
                             <div class="row">
                                 <div class="col-lg-12 table-box">
@@ -77,7 +77,8 @@
                                             href="/board/modify?restaurantNum=${restaurant.restaurantNum}">수정</a>
                                         <a class="btn btn-basic"
                                             href="/board/delete?restaurantNum=${restaurant.restaurantNum}">삭제</a>
-                                        <a class="btn btn-basic" href="/board/list">목록</a>
+                                        <a class="btn btn-basic"
+                                            href="/board/list?page=${cri.page}&type=${cri.type}&keyword=${cri.keyword}&amount=${cri.amount}">목록</a>
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +110,8 @@
         integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
     <!-- custom js -->
     <script>
-
+        // url 감추기
+        // history.replaceState({}, null, location.pathname);
     </script>
 
 </body>

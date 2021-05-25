@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor //mapper 적용시
 public class BoardService {
 
     private final FoodMapper foodMapper;
@@ -20,8 +20,12 @@ public class BoardService {
         return foodMapper.findAll();
     }*/
     // 2. 페이징 쿼리 추가 버전
-    public List<Restaurant> findAll(Criteria criteria){
+    /*public List<Restaurant> findAll(Criteria criteria){
         return foodMapper.findAll(criteria);
+    }*/
+    // 3. 검색 쿼리 추가 버전
+    public List<Restaurant> findAll(Criteria criteria){
+        return foodMapper.getSearchFindAll(criteria);
     }
 
     //게시글 등록
@@ -45,8 +49,8 @@ public class BoardService {
     }
 
     // 총 게시물 수 조회
-    public int getTotal() {
-        return foodMapper.getTotalCount();
+    public int getTotal(Criteria criteria) {
+        return foodMapper.getTotalCount(criteria);
     }
 
 

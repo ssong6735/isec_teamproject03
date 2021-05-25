@@ -48,31 +48,38 @@
                     <section id="sub-page" class="main-container">
                         <div class="container clearfix">
 
-                            <form class="search-box margin-clear" name="s-form" action="#" method="post">
-                                <input type="hidden" name="search" value="on">
-                                <div class="row search-line">
-                                    <div class="col-lg-5">
-                                        <p>총 <span class="total-count">2</span> 건의 게시물이 등록되어 있습니다.</p>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <select name="select">
-                                            <option value="S_RES_NUM">매점번호</option>
-                                            <option value="S_RES_NAME">매점명</option>
-                                            <option value="S_TEL_NUM">연락처</option>
-                                            <option value="S_ALL">전체</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-5">
-                                        <div class="form-group has-feedback">
-                                            <input class="form-control" type="text" name="sword"
-                                                placeholder="검색어를 입력하세요.">
-                                            <input type="hidden" name="Sub_No" value="1">
-                                            <span onclick="go_search();"><i
-                                                    class="icon-search form-control-feedback fas fa-search"></i></span>
+                            <!-- 검색창 영역 -->
+                            <div class="search">
+                                <form class="search-box margin-clear" name="s-form" action="/board/list">
+                                    <input type="hidden" name="amount" value="${pageMaker.criteria.amount}">
+                                    <div class="row search-line">
+                                        <div class="col-lg-5">
+                                            <p>총 <span class="total-count">${pageMaker.totalCount}</span> 건의 게시물이 조회되었습니다.</p>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <select name="type">
+                                                <option value="resNum" ${pageMaker.criteria.type=='resNum' ? 'selected'
+                                                    : '' }>매점번호</option>
+                                                <option value="resName" ${pageMaker.criteria.type=='resName'
+                                                    ? 'selected' : '' }>매점명</option>
+                                                <option value="number" ${pageMaker.criteria.type=='number' ? 'selected'
+                                                    : '' }>연락처</option>
+                                                <option value="menus" ${pageMaker.criteria.type=='menus' ? 'selected'
+                                                    : '' }>메뉴</option>
+                                                <option value="category" ${pageMaker.criteria.type=='titcategoryle'
+                                                    ? 'selected' : '' }>카테고리</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <div class="form-group has-feedback">
+                                                <input class="form-control" type="text" name="keyword"
+                                                    placeholder="검색어를 입력하세요." value="${pageMaker.criteria.keyword}">
+                                                <button class="btn btn-basic" type="submit">검색</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
 
                             <div class="row">
                                 <div class="col-lg-12 table-box">
@@ -89,7 +96,7 @@
                                             <%-- 게시물 개수가 0개일 경우 목록대신 "게시물이 존재하지 않습니다." 출력 --%>
                                             <c:if test="${list.size() <= 0}">
                                                 <tr>
-                                                    <td class="no-article" colspan="5">게시물이 존재하지 않습니다.</td>
+                                                    <td class="no-article" colspan="5"><a href="#">게시물이 존재하지 않습니다.</a></td>
                                                 </tr>
                                             </c:if>
 
@@ -102,7 +109,7 @@
                                                         <td>${restaurant.number}</td>
                                                         <td>
                                                             <div class="text-ellipsis"><a
-                                                                    href="/board/content?restaurantNum=${restaurant.restaurantNum}">${restaurant.menus}</a>
+                                                                    href="/board/content${pageMaker.makeParam(pageMaker.criteria.page)}&restaurantNum=${restaurant.restaurantNum}">${restaurant.menus}</a>
                                                             </div>
                                                         </td>
                                                         <td>${restaurant.category.foodName}</td>
@@ -125,20 +132,20 @@
                                     <c:if test="${pageMaker.prev}">
                                         <li class="page-item">
                                             <a class="page-link"
-                                                href="/board/list?page=${pageMaker.beginPage - 1}">이전</a>
+                                                href="/board/list${pageMaker.makeParam(pageMaker.beginPage-1)}">이전</a>
                                         </li>
                                     </c:if>
 
                                     <c:forEach var="i" begin="${pageMaker.beginPage}" end="${pageMaker.endPage}"
                                         step="1">
                                         <li class="page-item" data-page="${i}"><a class="page-link"
-                                                href="/board/list?page=${i}">${i}</a></li>
+                                                href="/board/list${pageMaker.makeParam(i)}">${i}</a></li>
                                     </c:forEach>
 
                                     <c:if test="${pageMaker.next}">
                                         <li class="page-item">
                                             <a class="page-link"
-                                                href="/board/list?page=${pageMaker.endPage + 1}">다음</a>
+                                                href="/board/list${pageMaker.makeParam(pageMaker.endPage+1)}">다음</a>
                                         </li>
                                     </c:if>
                                 </ul>
@@ -189,6 +196,9 @@
         (function () {
             appendPageActive('${pageMaker.criteria.page}');
         }());
+
+        // url 감추기
+        // history.replaceState({}, null, location.pathname);
     </script>
 
 </body>
