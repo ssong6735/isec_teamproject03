@@ -51,6 +51,10 @@
                             <div class="row">
                                 <div class="col-lg-12 table-box">
                                     <form action="/board/write" method="POST">
+                                        <input type="hidden" name="page" value="${cri.page}">
+                                        <input type="hidden" name="amount" value="${cri.amount}">
+                                        <input type="hidden" name="type" value="${cri.type}">
+                                        <input type="hidden" name="keyword" value="${cri.keyword}">
                                         <table class="table write-table">
                                             <tbody>
                                                 <tr>
@@ -83,7 +87,7 @@
 
                                         <div class="list-btn">
                                             <button type="submit" class="btn btn-basic">등록</button>
-                                            <a class="btn btn-basic" href="#" onClick="history.back();">취소</a>
+                                            <a class="btn btn-basic" href="/board/list">취소</a>
                                         </div>
                                     </form>
                                 </div>

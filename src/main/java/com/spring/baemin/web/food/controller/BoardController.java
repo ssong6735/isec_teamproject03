@@ -72,14 +72,14 @@ public class BoardController {
 
     //매점 정보 수정하기 화면요청
     @GetMapping("/modify")
-    public String modify(int restaurantNum, Model model) {
+    public String modify(int restaurantNum, @ModelAttribute("cri") Criteria criteria, Model model) {
         model.addAttribute("restaurant", boardService.more(restaurantNum));
         return "/board/modify";
     }
 
     //매점 정보 수정 처리요청
     @PostMapping("/modify")
-    public String modify(ModifyRestaurant modRestaurant) {
+    public String modify(ModifyRestaurant modRestaurant, Criteria criteria) {
         // 원본데이터를 찾아서 수정데이터로 변경하는 로직(서비스에 넣어주는게 좋다)
         Restaurant restaurant = boardService.more(modRestaurant.getRestaurantNum());
         restaurant.setRestaurantName(modRestaurant.getRestaurantName());
@@ -89,9 +89,17 @@ public class BoardController {
         try {
             boardService.rewrite(restaurant);
         } catch (Exception e) {
-            return "redirect:/board/modify?restaurantNum=" + modRestaurant.getRestaurantNum();
+            return "redirect:/board/modify?restaurantNum=" + modRestaurant.getRestaurantNum()
+                    + "&page=" + criteria.getPage()
+                    + "&amount=" + criteria.getAmount()
+                    + "&type=" + criteria.getType()
+                    + "&keyword=" + criteria.getKeyword();
         }
-        return "redirect:/board/content?restaurantNum=" + modRestaurant.getRestaurantNum();
+        return "redirect:/board/content?restaurantNum=" + modRestaurant.getRestaurantNum()
+                + "&page=" + criteria.getPage()
+                + "&amount=" + criteria.getAmount()
+                + "&type=" + criteria.getType()
+                + "&keyword=" + criteria.getKeyword();
     }
 
     //등록 매점 삭제 요청

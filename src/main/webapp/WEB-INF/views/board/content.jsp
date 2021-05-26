@@ -74,9 +74,9 @@
 
                                     <div class="list-btn">
                                         <a class="btn btn-basic"
-                                            href="/board/modify?restaurantNum=${restaurant.restaurantNum}">수정</a>
+                                            href="/board/modify?restaurantNum=${restaurant.restaurantNum}&page=${cri.page}&type=${cri.type}&keyword=${cri.keyword}&amount=${cri.amount}">수정</a>
                                         <a class="btn btn-basic"
-                                            href="/board/delete?restaurantNum=${restaurant.restaurantNum}">삭제</a>
+                                            href="/board/delete?restaurantNum=${restaurant.restaurantNum}&page=${cri.page}&type=${cri.type}&keyword=${cri.keyword}&amount=${cri.amount}">삭제</a>
                                         <a class="btn btn-basic"
                                             href="/board/list?page=${cri.page}&type=${cri.type}&keyword=${cri.keyword}&amount=${cri.amount}">목록</a>
                                     </div>

@@ -95,7 +95,7 @@
 
                                             <%-- 게시물 개수가 0개일 경우 목록대신 "게시물이 존재하지 않습니다." 출력 --%>
                                             <c:if test="${list.size() <= 0}">
-                                                <tr>
+                                                <tr class="not-found">
                                                     <td class="no-article" colspan="5"><a href="#">게시물이 존재하지 않습니다.</a></td>
                                                 </tr>
                                             </c:if>
@@ -109,7 +109,7 @@
                                                         <td>${restaurant.number}</td>
                                                         <td>
                                                             <div class="text-ellipsis"><a
-                                                                    href="/board/content${pageMaker.makeParam(pageMaker.criteria.page)}&restaurantNum=${restaurant.restaurantNum}">${restaurant.menus}</a>
+                                                                    href="/board/content${pageMaker.makeParam(pageMaker.criteria.page, pageMaker.criteria.amount)}&restaurantNum=${restaurant.restaurantNum}">${restaurant.menus}</a>
                                                             </div>
                                                         </td>
                                                         <td>${restaurant.category.foodName}</td>
@@ -179,7 +179,7 @@
     <script>
         // 리스트 게시판 tr 클릭이벤트
         document.querySelector('table.table').addEventListener('click', e => {
-            if (!e.target.matches('table.table tr td')) return;
+            if (!e.target.matches('table.table tr td') || e.target.matches('table.table tr.not-found td')) return;
             // console.log('tr clicked!', e.target);
             location.href = '/board/content?restaurantNum=' + e.target.parentNode.dataset.num;
         });

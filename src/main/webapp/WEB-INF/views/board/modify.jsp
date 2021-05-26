@@ -52,6 +52,10 @@
                                 <div class="col-lg-12 table-box">
                                     <form action="/board/modify" method="POST">
                                         <input type="hidden" name="restaurantNum" value="${restaurant.restaurantNum}">
+                                        <input type="hidden" name="page" value="${cri.page}">
+                                        <input type="hidden" name="amount" value="${cri.amount}">
+                                        <input type="hidden" name="type" value="${cri.type}">
+                                        <input type="hidden" name="keyword" value="${cri.keyword}">
 
                                         <table class="table write-table">
                                             <tbody>
@@ -95,7 +99,7 @@
 
                                         <div class="list-btn">
                                             <button type="submit" class="btn btn-basic">완료</button>
-                                            <a class="btn btn-basic" href="#" onClick="history.back();">취소</a>
+                                            <a class="btn btn-basic" href="/board/list?page=${cri.page}&type=${cri.type}&keyword=${cri.keyword}&amount=${cri.amount}">취소</a>
                                         </div>
                                     </form>
                                 </div>
